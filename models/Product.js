@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+const categoriesSchema = new mongoose.Schema({
+    categorie: String,
+    items: [productSchema]
+
+})
+
 const colorsSchema = new mongoose.Schema({
     red: {
         type: String
@@ -8,8 +14,11 @@ const colorsSchema = new mongoose.Schema({
         type: String
     }
 })
+
+
 //cada categoría-entidad se debe hacer en una tabla diferente: constSchema. Modelo bebestible, modelo postres, etc
 const productSchema = new mongoose.Schema({
+    id: String,
     sku: {
         type: String,
         required: true,
@@ -58,8 +67,10 @@ const productSchema = new mongoose.Schema({
 
 
 const Product = mongoose.model("products", productSchema)
+const Categories = mongoose.model("categories", categoriesSchema)
+//categories se debe escribir igual a como está en mongoose
 
-module.exports = Product;
+module.exports = { Product, Categories }
 
 
 

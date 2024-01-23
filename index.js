@@ -19,11 +19,10 @@ app.use(express.static('public'))
 //Servidor entiende en POST ---> JSON
 app.use(cors()); //admitimos todos los dominios
 app.use(express.json());
+
 // Con esto usamos una router en nuestro servidor
 app.use(productRouter);
 app.use(userRouter);
-
-
 
 // Levantamiento de servidor
 app.listen(process.env.PORT, () => {

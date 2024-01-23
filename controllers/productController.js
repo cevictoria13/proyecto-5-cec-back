@@ -1,12 +1,39 @@
 const Product = require("../models/Product")
+const Categories = require("../models/Product")
+
+
+
+// traer la categoría de productos con GETCategory
+const getCategories = async (req, res) => {
+    try {
+        const Categories = await Categories.find();
+        res.json({ 
+            success: true, 
+            msg: "Lista de Categorías", 
+            Categories: Categories
+        })
+    } catch (error) {
+        res.json({ 
+            success: false, 
+            msg: error.message 
+        })
+    }
+}
 
 //relacionado con GET
 const getProducts = async (req, res) => {
     try {
         const products = await Product.find();
-        res.json({ success: true, msg: "Lista de productos", info: products })
+        res.json({ 
+            success: true, 
+            msg: "Lista de productos", 
+            info: products 
+        })
     } catch (error) {
-        res.json({ success: false, msg: error.message })
+        res.json({ 
+            success: false, 
+            msg: error.message 
+        })
     }
 }
 
@@ -17,11 +44,19 @@ const getProductById = async (req, res) => {
         const { id } = req.param
         const product = await Product.findById(id);
 
-        res.json({ success: true, msg: "Se ha cargado el producto", product })
+        res.json({ 
+            success: true, 
+            msg: "Se ha cargado el producto", 
+            product 
+        })
     } catch (error) {
-        res.status(500).json({ success: false, msg: error.message })
+        res.status(500).json({ 
+            success: false, 
+            msg: error.message 
+        })
     }
 }
+
 
 //relacionado con POST
 
@@ -37,7 +72,10 @@ const createProduct = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({ success: false, msg: error.message })
+        res.status(500).json({
+            success: false,
+            msg: error.message
+        })
     }
 }
 
@@ -50,7 +88,7 @@ const editProduct = async (req, res) => {
 
     try {
 
-        const updateProduct = await Product.findByIdAndUpdate(id, { name, price, stock }, { new: true })
+        const updateProduct = await Product.findByIdAndUpdate(id, { name, price, stock, details, image }, { new: true })
         res.status(201).json({
             success: true,
             msg: "producto actualizado con éxito!",
@@ -58,7 +96,10 @@ const editProduct = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ 
+            success: false, 
+            message: error.message 
+        })
     }
 }
 
@@ -70,13 +111,16 @@ const deleteProduct = async (req, res) => {
     try {
         const destroyProduct = await Product.findByIdAndDelete(id);
 
-        res.json({ 
-            success: true, 
-            msg: "producto eliminado con éxito!", 
-            destroyProduct 
+        res.json({
+            success: true,
+            msg: "producto eliminado con éxito!",
+            destroyProduct
         })
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ 
+            success: false, 
+            message: error.message 
+        })
     }
 }
 
@@ -88,9 +132,9 @@ const reduceStock = async (req, res) => {
         productPurchased.map(async (product) => {
             await Product.findByIdAndUpdate(product._id, { stock: product.stock - product.quantity })
         })
-        res.status(201).json({ 
-            success: true, 
-            msg: "Se ha reducido el stock de los productos" 
+        res.status(201).json({
+            success: true,
+            msg: "Se ha reducido el stock de los productos"
         })
 
     } catch (error) {
@@ -98,4 +142,4 @@ const reduceStock = async (req, res) => {
     }
 }
 
-module.exports = { getProducts, getProductById, createProduct, editProduct, deleteProduct, reduceStock }
+module.exports = { getCategories, getProducts, getProductById, createProduct, editProduct, deleteProduct, reduceStock }

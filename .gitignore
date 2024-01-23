@@ -1,1 +1,3 @@
 /node_modules
+#variables de entorno en secreto, no  se suben al github
+.env

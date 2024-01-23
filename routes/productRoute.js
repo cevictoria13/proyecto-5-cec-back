@@ -6,7 +6,8 @@ const { getProducts,
     createProduct,
     editProduct,
     deleteProduct,
-    reduceStock } = require('../controllers/productController')
+    reduceStock,
+    getCategories} = require('../controllers/productController')
 
 const productRouter = express.Router();
 
@@ -15,14 +16,17 @@ productRouter.route('/products') // URL que se ve en postman http://localhost:80
     .get(getProducts) 
 
 productRouter.route("/createProduct")
-    .post(createProduct)
+    .post(auth, admin, createProduct)
 
 productRouter.route("/product/:id")
     .get(getProductById)
-    .put( editProduct)
-    .delete(deleteProduct)
+    .put( auth, admin, editProduct)
+    .delete(auth, admin, deleteProduct)
 
 productRouter.route("/reduceStock")
     .put(reduceStock)
+
+productRouter.route("/categories")
+    .get(getCategories)    
 
 module.exports = productRouter;
